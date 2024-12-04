@@ -4,14 +4,14 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    public GameObject[] enemyPrefabs; // Array of enemy prefabs
-    public int poolSize = 20; // Number of enemies in the pool for each prefab
+    public GameObject[] enemyPrefabs;
+    public int poolSize = 20;
     public float initialSpawnDelay = 2f;
     public float spawnInterval = 3f;
 
     [Header("Spawn Area Settings")]
-    public Transform towerTransform; // Reference to the tower
-    private List<GameObject>[] enemyPools; // Pools for each enemy type
+    public Transform towerTransform;
+    private List<GameObject>[] enemyPools;
     private float spawnTimer;
 
     private void Start()
@@ -73,7 +73,7 @@ public class Spawner : MonoBehaviour
             Enemy enemyScript = enemy.GetComponent<Enemy>();
             if (enemyScript != null)
             {
-                enemyScript.target = towerTransform; // Assign the Tower's Transform
+                enemyScript.target = towerTransform;
             }
             enemy.SetActive(true);
         }

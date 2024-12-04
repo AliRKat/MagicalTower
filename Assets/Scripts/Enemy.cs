@@ -48,10 +48,8 @@ public class Enemy : HealthSystem, IDamageDealer
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if the enemy collided with the player
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Get the PlayerHealth script on the player and apply damage
             HealthSystem health = collision.gameObject.GetComponent<HealthSystem>();
             if (health != null)
             {

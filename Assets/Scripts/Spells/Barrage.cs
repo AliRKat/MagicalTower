@@ -33,10 +33,8 @@ public class Barrage : MonoBehaviour, IDamageDealer
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the projectile hits an enemy
         if (other.CompareTag("Enemy"))
         {
-            // Get the PlayerHealth script on the player and apply damage
             HealthSystem health = other.gameObject.GetComponentInParent<HealthSystem>();
             if (health != null)
             {

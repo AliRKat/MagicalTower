@@ -38,10 +38,8 @@ public class Fireball : MonoBehaviour, IDamageDealer
         Collider[] colliders = Physics.OverlapSphere(explosionCenter, areaEffectRadius);
         foreach (Collider collider in colliders)
         {
-            // Check if the projectile hits an enemy
             if (collider.CompareTag("Enemy"))
             {
-                // Get the PlayerHealth script on the player and apply damage
                 HealthSystem health = collider.gameObject.GetComponentInParent<HealthSystem>();
                 if (health != null)
                 {

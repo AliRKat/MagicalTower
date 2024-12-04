@@ -8,9 +8,9 @@ public class SpellcastingController : MonoBehaviour
     public Barrage barragePrefab;
     public Transform tower;
 
-    public float fireballCooldown = 3f; // Cooldown for Fireball in seconds
-    public float barrageCooldown = 1f; // Cooldown for Barrage in seconds
-    public float detectionRadius = 150f; // Radius for detecting enemies for both Fireball and Barrage
+    public float fireballCooldown = 3f;
+    public float barrageCooldown = 1f;
+    public float detectionRadius = 150f;
 
     [Header("Fireball Settings")]
     public int fireballDamage;
@@ -26,21 +26,17 @@ public class SpellcastingController : MonoBehaviour
 
     private void Start()
     {
-        // Initialize spell cooldowns
         spellCooldowns["Fireball"] = false;
         spellCooldowns["Barrage"] = false;
     }
 
     private void Update()
     {
-        // Fireball spell logic
-        if (Input.GetKeyDown(KeyCode.F) && !spellCooldowns["Fireball"]) // Fireball Spell
+        if (Input.GetKeyDown(KeyCode.F) && !spellCooldowns["Fireball"])
         {
             CastFireball();
         }
-
-        // Barrage spell logic
-        if (Input.GetKeyDown(KeyCode.B) && !spellCooldowns["Barrage"]) // Barrage Spell
+        if (Input.GetKeyDown(KeyCode.B) && !spellCooldowns["Barrage"])
         {
             CastBarrage();
         }
@@ -48,37 +44,30 @@ public class SpellcastingController : MonoBehaviour
 
     private void CastFireball()
     {
-        // Find a random direction within a specified radius (e.g., 10 units away)
         Vector3 randomDirection = Random.insideUnitSphere * 10f;
-        randomDirection.y = 0; // Keep the fireball on the same Y level (horizontal direction)
+        randomDirection.y = 0;
 
-        // Instantiate the fireball and initialize its direction and properties
         Fireball fireball = Instantiate(fireballPrefab, tower.position, Quaternion.identity);
-        fireball.Initialize(fireballDamage, randomDirection.normalized, fireballSpeed, fireballRadius); // Damage, direction, speed, area radius
+        fireball.Initialize(fireballDamage, randomDirection.normalized, fireballSpeed, fireballRadius);
 
-        // Start the cooldown timer for Fireball
         StartCoroutine(SpellCooldown("Fireball", fireballCooldown));
     }
 
     private void CastBarrage()
     {
-        // Perform a spherecast to detect enemies within the detection radius
         Collider[] enemiesInRange = Physics.OverlapSphere(tower.position, detectionRadius, LayerMask.GetMask("Enemy"));
 
         foreach (Collider enemyCollider in enemiesInRange)
         {
             Transform enemy = enemyCollider.transform;
-
-            // For each enemy in range, instantiate a barrage projectile
             Barrage barrage = Instantiate(barragePrefab, tower.position, Quaternion.identity);
             barrage.Initialize(barrageSpeed, barrageDamage, enemy.parent.transform);
         }
 
-        // Start the cooldown timer for Barrage
         StartCoroutine(SpellCooldown("Barrage", barrageCooldown));
     }
 
-    // General cooldown function for both spells, uses the spell name to update the cooldown
+    // General cooldown function for spells, uses the spell name to update the cooldown
     private IEnumerator SpellCooldown(string spellName, float cooldownTime)
     {
         spellCooldowns[spellName] = true; // Set the spell's cooldown flag to true

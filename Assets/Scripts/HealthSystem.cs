@@ -51,24 +51,6 @@ public class HealthSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Heal the object by a specified amount.
-    /// </summary>
-    /// <param name="amount">Amount of health to restore.</param>
-    public void Heal(float amount)
-    {
-        currentHealth += amount;
-
-        // Clamp health to prevent over-healing
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-
-        // Update health bar if available
-        if (healthBar != null) 
-        { 
-            healthBar.value = currentHealth; 
-        }
-    }
-
-    /// <summary>
     /// Handles logic when health reaches zero.
     /// Override this in child classes to add custom behavior.
     /// </summary>
